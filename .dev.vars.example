@@ -1,0 +1,18 @@
+LUCID_ADMIN_PASSWORD=change-this-local-password
+LUCID_SESSION_SECRET=replace-with-a-random-secret-at-least-32-characters
+APP_ORIGIN=http://localhost:8795
+
+# Give each product a unique token. Configure each site's server runtime with
+# the matching LUCID_QUEUE_TOKEN value and its PROJECT_ID.
+LUCID_CUTRANK_TOKEN=replace-with-a-cutrank-token
+LUCID_LISTVINT_TOKEN=replace-with-a-listvint-token
+LUCID_MODHORIZON_TOKEN=replace-with-a-modhorizon-token
+
+# These processor endpoints are private server-to-server routes in the apps.
+# The local demo processors are only for local integration development.
+CUTRANK_PROCESSOR_URL=
+LISTVINT_PROCESSOR_URL=
+MODHORIZON_PROCESSOR_URL=
+CUTRANK_PROCESSOR_TOKEN=replace-with-a-cutrank-processor-token
+LISTVINT_PROCESSOR_TOKEN=replace-with-a-listvint-processor-token
+MODHORIZON_PROCESSOR_TOKEN=replace-with-a-modhorizon-processor-token

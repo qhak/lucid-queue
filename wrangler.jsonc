@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lucid-queue",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-30",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lucid-queue",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "workflows": [
+    {
+      "name": "lucid-job-runner",
+      "binding": "JOB_RUNNER",
+      "class_name": "JobWorkflow"
+    }
+  ],
+  "vars": {
+    "APP_ORIGIN": "http://localhost:8795"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

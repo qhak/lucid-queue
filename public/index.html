@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f8fa" />
+    <meta name="description" content="Lucid Queue — a clear view of every job, worker, and build." />
+    <title>Lucid Queue — Queue overview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#overview" aria-label="Lucid Queue home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>lucid<span class="brand-light">queue</span></span>
+        </a>
+        <div class="workspace-label">WORKSPACE</div>
+        <button class="workspace-switcher"><span class="workspace-avatar">M</span><span><b>ModHorizon</b><small>Personal workspace</small></span><span class="chevrons">⌃<br>⌄</span></button>
+        <div class="nav-label">MONITOR</div>
+        <nav class="nav-list" aria-label="Main navigation">
+          <a href="#overview" class="nav-item active" aria-current="page"><span class="nav-icon">◫</span>Overview</a>
+          <a href="#jobs" class="nav-item"><span class="nav-icon">≡</span>Jobs <span class="nav-count" id="nav-jobs">8</span></a>
+          <a href="#workers" class="nav-item"><span class="nav-icon">⠿</span>Workers</a>
+          <a href="#activity" class="nav-item"><span class="nav-icon">◷</span>Activity</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="plan-card"><div class="plan-top"><span class="plan-icon">✦</span><span>Free plan</span><span class="plan-pill">DEMO</span></div><p>Your queue is running locally.</p><div class="plan-meter"><i></i></div><small>8 of 100 jobs this month</small></div>
+          <button class="profile"><span class="profile-avatar">N</span><span><b>Nicholas</b><small>Local demo</small></span><span class="more">···</span></button>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar"><div class="breadcrumbs"><span>Lucid Queue</span><span class="slash">/</span><b>Overview</b></div><div class="top-actions"><span class="local-status"><i></i> QUEUE API</span><button class="help-button" id="logout-button">Sign out</button></div></header>
+        <div class="page-content">
+          <section class="page-heading"><div><div class="eyebrow" id="queue-clock">LIVE QUEUE</div><h1>Queue overview</h1><p class="subheading">Live requests from CutRank, Listvint, and ModHorizon.</p></div><button class="primary-button" id="new-job"><span>＋</span> New job</button></section>
+
+          <div class="integration-status" id="integration-status" hidden></div>
+          <section class="metric-grid" aria-label="Queue metrics">
+            <article class="metric-card"><div class="metric-top"><span>Waiting</span><span class="metric-icon blue">≡</span></div><div class="metric-value" id="metric-queued">0</div><div class="metric-foot"><span class="muted">Jobs waiting for a processor</span></div></article>
+            <article class="metric-card"><div class="metric-top"><span>Processing</span><span class="metric-icon green">⠿</span></div><div class="metric-value"><span id="metric-active">0</span></div><div class="metric-foot"><span class="status-text"><i class="pulse-dot"></i> Current active requests</span></div></article>
+            <article class="metric-card"><div class="metric-top"><span>Completed</span><span class="metric-icon violet">✓</span></div><div class="metric-value" id="metric-done">0</div><div class="metric-foot"><span class="muted">All time</span></div></article>
+            <article class="metric-card"><div class="metric-top"><span>Needs attention</span><span class="metric-icon amber">!</span></div><div class="metric-value" id="metric-failed">0</div><div class="metric-foot"><span class="muted">Failed requests</span></div></article>
+          </section>
+
+          <section class="panel pipeline-panel" aria-labelledby="pipeline-title">
+            <div class="panel-header"><div><div class="section-kicker">LIVE SYSTEM</div><h2 id="pipeline-title">Processing pipeline</h2></div><div class="panel-header-right"><span class="updated-label"><i class="pulse-dot"></i> Updating live</span><button class="subtle-button" id="pause-queue">Ⅱ <span>Pause queue</span></button></div></div>
+            <div class="pipeline" id="pipeline">
+              <div class="pipeline-node source-node"><span class="node-icon">↗</span><div><b>Product sites</b><small>Incoming requests</small></div><span class="node-live">3 APPS</span></div>
+              <div class="pipe-link"><i></i><span class="pipe-packet"></span><small><span id="pipeline-total">0</span> total</small></div>
+              <div class="pipeline-node queue-node"><span class="node-icon">≡</span><div><b>Job queue</b><small><span id="pipeline-queued">0</span> waiting</small></div><span class="queue-tag">DURABLE</span></div>
+              <div class="pipe-link"><i></i><span class="pipe-packet packet-2"></span><small><span id="pipeline-active">0</span> active</small></div>
+              <div class="pipeline-node workflow-node"><span class="node-icon">⠿</span><div><b>Active workflows</b><small><span id="pipeline-active-label">0 running</span></small></div></div>
+              <div class="pipe-link"><i></i></div>
+              <div class="pipeline-node build-node"><span class="node-icon">⌘</span><div><b>Product handler</b><small>Runs app-specific work</small></div></div>
+              <div class="pipe-link"><i></i></div>
+              <div class="pipeline-node ready-node"><span class="node-icon">✓</span><div><b>Result returned</b><small>Saved by product app</small></div></div>
+            </div>
+            <div class="pipeline-legend"><span><i class="legend-blue"></i>Queue</span><span><i class="legend-green"></i>Active jobs</span><span><i class="legend-gray"></i>Product handlers</span><span class="pipeline-note">Each request is tracked through its product handler</span></div>
+          </section>
+
+          <div class="lower-grid">
+            <section class="panel jobs-panel" id="jobs" aria-labelledby="jobs-title"><div class="panel-header jobs-heading"><div><div class="section-kicker">INCOMING WORK</div><h2 id="jobs-title">Recent jobs <span class="heading-count" id="jobs-count">8</span></h2></div><a class="text-link" href="#jobs">View all <span>→</span></a></div>
+              <div class="table-wrap"><table><thead><tr><th>JOB</th><th>SUBMITTED BY</th><th>STATUS</th><th>WAIT TIME</th><th></th></tr></thead><tbody id="jobs-body"></tbody></table></div>
+              <div class="table-footer"><span>Showing <b id="showing-count">5</b> of <b id="total-count">8</b> jobs</span><button class="pagination" aria-label="More jobs">•••</button></div>
+            </section>
+            <section class="panel workers-panel" id="workers" aria-labelledby="workers-title"><div class="panel-header"><div><div class="section-kicker">RUNNING WORKFLOWS</div><h2 id="workers-title">Active jobs <span class="heading-count">0</span></h2></div></div><div class="workers-list" id="workers-list"></div><p class="worker-empty" id="worker-empty">No requests are processing right now.</p></section>
+          </div>
+          <section class="panel activity-panel" id="activity"><div class="panel-header"><div><div class="section-kicker">JUST HAPPENED</div><h2>Activity</h2></div><a class="text-link" href="#activity">View activity <span>→</span></a></div><div class="activity-list" id="activity-list"></div></section>
+          <footer class="footer"><span>Lucid Queue <span class="footer-version">v0.1.0</span></span><span>Made for clarity <span class="footer-heart">♥</span></span></footer>
+        </div>
+      </main>
+    </div>
+    <div class="login-screen" id="login-screen"><form class="login-card" id="login-form"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><div class="section-kicker">PRIVATE QUEUE CONSOLE</div><h1>Sign in to Lucid Queue</h1><p>Use the admin password configured for this deployment.</p><label for="admin-password">Admin password</label><input id="admin-password" name="password" type="password" autocomplete="current-password" required><button class="primary-button" type="submit">Continue <span>→</span></button><div class="login-error" id="login-error" role="alert"></div></form></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog id="job-dialog" class="job-dialog"><form method="dialog" id="job-form"><div class="dialog-head"><div><span class="section-kicker">QUEUE A REQUEST</span><h2>New job</h2></div><button class="dialog-close" type="button" aria-label="Close">×</button></div><label for="job-project">Product</label><select id="job-project" name="project"><option value="cutrank">CutRank</option><option value="listvint">Listvint</option><option value="modhorizon">ModHorizon</option></select><label for="job-type">Work type</label><select id="job-type" name="type"></select><label for="job-name">Job name</label><input id="job-name" name="name" placeholder="e.g. Physique scan" required maxlength="120"><label for="job-user">Submitted by</label><input id="job-user" name="submittedBy" placeholder="Website user or admin" maxlength="120"><label for="job-payload">Payload (JSON)</label><textarea id="job-payload" name="payload" rows="4" spellcheck="false">{}</textarea><div class="dialog-hint">Use private storage references for images. Raw image data is rejected.</div><div class="dialog-actions"><button class="subtle-button" value="cancel">Cancel</button><button class="primary-button" id="submit-job" value="submit">Add to queue <span>→</span></button></div></form></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
