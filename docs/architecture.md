@@ -48,11 +48,21 @@ Cloudflare Workflows were selected because their steps can retry durably and wai
 }
 ```
 
-The product handler returns `{ "result": ... }`. It must use `id` as its idempotency key. Results over 1 MB must stay in product storage; return a compact storage reference instead. A handler failure should use a non-success status and a short, user-safe JSON error.
+For short work, the product handler can return `{ "result": ... }` with HTTP 200. For long work, it can persist an idempotent product job, start processing, and return HTTP 202:
+
+```json
+{
+  "status": "running",
+  "statusUrl": "https://processor.example.com/internal/jobs/opaque-job-id",
+  "retryAfterSeconds": 5
+}
+```
+
+Lucid Queue polls that URL with the same processor bearer token. The URL must use HTTPS and share the configured processor's origin. While processing continues, return HTTP 200 with `{ "status": "queued" }` or `{ "status": "running" }`; when finished, return `{ "status": "done", "result": ... }` or `{ "status": "failed", "error": "short user-safe message" }`. Product handlers must deduplicate by the Lucid job ID and attempt and replay stored outcomes after a retry. Results over 1 MB must stay in product storage; return a compact storage reference instead. Existing synchronous handlers remain supported.
 
 ### Job states
 
-`queued → running → done | failed`; queued jobs can be cancelled. Failed jobs can be retried from the console. Transient dispatch failures are retried three times with exponential delay. Processing must be idempotent because a request can succeed at the product processor while its response is lost before Lucid Queue records completion.
+`queued → running → done | failed`; queued jobs can be cancelled. Failed jobs can be retried from the console. Transient dispatch/status failures are retried three times with exponential delay. Long-running processors are polled durably between workflow sleeps. Processing must be idempotent because a request can succeed at the product processor while its response is lost before Lucid Queue records completion.
 
 ## Security and data boundaries
 
@@ -73,4 +83,4 @@ These are integration constraints from the existing product code. The queue must
 
 ## Current integration boundary
 
-The queue service and dashboard are being built first. The three product adapters are not wired yet. Each adapter must refactor its existing synchronous operation into an idempotent private processor route and update its user-facing route to submit a job, poll status, and settle existing usage/billing state. Live integration is incomplete until those changes are deployed with matching secrets and private processor URLs.
+Product adapters keep each site's existing auth, billing, and file handling as the source of truth. Live integration remains incomplete until the adapter code, private processor URLs, and matching secrets are configured and deployed.

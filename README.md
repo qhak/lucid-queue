@@ -30,7 +30,7 @@ Product backends submit requests to `POST /api/jobs` with `Authorization: Bearer
 }
 ```
 
-The API returns `202` and a `jobId`. The product backend can poll `GET /api/jobs/{jobId}` with the same project token. A status of `done` includes the processor result; `failed` includes a bounded error. Product handlers must deduplicate by `id` because the workflow can retry a request after a network failure.
+The API returns `202` and a `jobId`. The product backend can poll `GET /api/jobs/{jobId}` with the same project token. A status of `done` includes the processor result; `failed` includes a bounded error. Product handlers must deduplicate by the Lucid job ID and attempt because the workflow can retry a request after a network failure. A processor can finish synchronously or return `202` with a same-origin HTTPS `statusUrl` for durable polling of longer jobs.
 
 Job payloads contain references to the products' private media storage, never raw photos, data URLs, account credentials, or secrets. The product app remains responsible for user authentication, authorization, usage limits, billing reservations, private image storage, and returning large results to the user. Lucid Queue coordinates processing and keeps the shared job history.
 

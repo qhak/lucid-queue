@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 — 2026-11-02
+
+- Added durable polling for private product processors that acknowledge long-running work with HTTP 202.
+- Validate processor status URLs as same-origin HTTPS endpoints, bound response bodies, and retain compatibility with existing synchronous processors.
+- Documented the async processor contract used by CutRank, Listvint, and ModHorizon adapters.
+- Verified a local mock processor through multiple durable status polls, then TypeScript and Wrangler deployment dry-run checks.
+
 ## 0.3.0 — 2026-11-01
 
 - Reworked the processing pipeline so stage labels and live job counts stay inside their connectors at desktop and narrow widths.
