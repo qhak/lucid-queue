@@ -25,7 +25,9 @@
     }
   ],
   "vars": {
-    "APP_ORIGIN": "https://lucid-queue.callout-ai.workers.dev"
+    "APP_ORIGIN": "https://lucid-queue.callout-ai.workers.dev",
+    "CUTRANK_PROCESSOR_URL": "https://calloutapp.callout-ai.workers.dev/api/lucid/process",
+    "MODHORIZON_PROCESSOR_URL": "https://modhorizon.callout-ai.workers.dev/api/internal/lucid-queue"
   },
   "observability": {
     "enabled": true

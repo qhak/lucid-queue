@@ -40,7 +40,7 @@ See [the architecture and integration plan](docs/architecture.md) for job types,
 
 The production Worker is live at [`lucid-queue.callout-ai.workers.dev`](https://lucid-queue.callout-ai.workers.dev). Its EU D1 database and initial schema are provisioned. An unauthenticated `POST /api/jobs` is rejected; no product is submitting jobs yet.
 
-This is an early production deployment, not a completed multi-product integration. Listvint's queue adapter code is deployed with its feature flag off. CutRank and ModHorizon adapter code is prepared but not deployed. Before enabling jobs, configure the project and processor tokens, processor URLs, admin password and session secret, and protect the operations dashboard with Cloudflare Access. Listvint also needs its Supabase migration and private storage bucket. Cloudflare R2 must be enabled before provisioning the private CutRank media and ModHorizon artifact buckets.
+This is an early production deployment, not a completed multi-product integration. CutRank and ModHorizon Workers, D1 schemas, private R2 buckets, and processor URLs are deployed; their queue feature flags remain off until the operations dashboard has an admin password, session secret, and Cloudflare Access protection. Listvint's adapter code is deployed with its feature flag off and still needs its Supabase migration and private storage bucket. No product is submitting jobs yet.
 
 ## Project layout
 
