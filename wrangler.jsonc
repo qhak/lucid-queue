@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "lucid-queue",
+  "workers_dev": true,
   "main": "src/index.ts",
   "compatibility_date": "2026-10-30",
   "assets": {
@@ -12,7 +13,7 @@
     {
       "binding": "DB",
       "database_name": "lucid-queue",
-      "database_id": "00000000-0000-0000-0000-000000000001",
+      "database_id": "c60b487e-a91f-442d-bd5c-d96f44d96180",
       "migrations_dir": "migrations"
     }
   ],
@@ -24,7 +25,7 @@
     }
   ],
   "vars": {
-    "APP_ORIGIN": "http://localhost:8795"
+    "APP_ORIGIN": "https://lucid-queue.callout-ai.workers.dev"
   },
   "observability": {
     "enabled": true

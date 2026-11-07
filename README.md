@@ -38,7 +38,7 @@ See [the architecture and integration plan](docs/architecture.md) for job types,
 
 ## Deployment
 
-The service targets Cloudflare Workers and Workflows with D1. Before deployment, create a D1 database, update the database ID in `wrangler.jsonc`, configure the product tokens and private processor endpoints as Worker secrets, and protect the dashboard hostname with Cloudflare Access. Add each site's queue token and endpoint to that site's server environment. Local code is prepared for this deployment; no Cloudflare account resources or live sites have been changed by this project yet.
+The service targets Cloudflare Workers and Workflows with D1. The production EU D1 database and initial schema are now provisioned. The Worker is not deployed, and product queues remain disabled. Before accepting jobs, deploy the Worker; configure the three project tokens and three processor tokens as secrets, set processor URLs and the public origin as vars, set the admin password and session secret, and protect the operations dashboard with Cloudflare Access. R2 is disabled on this account and is required for CutRank and ModHorizon; Listvint still needs its Supabase migration.
 
 ## Project layout
 
